@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인공지능 윤리 탐구 및 생각 공유 웹앱</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.2.2/wordcloud2.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastel: {
+                            blue: '#e0f2fe',
+                            green: '#dcfce7',
+                            yellow: '#fef9c3',
+                            purple: '#f3e8ff',
+                            pink: '#fce7f3',
+                            orange: '#ffedd5',
+                            gray: '#f3f4f6'
+                        },
+                        accent: {
+                            primary: '#6366f1',
+                            secondary: '#8b5cf6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Pretendard', 'Apple SD Gothic Neo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Pretendard', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 탭 전환 애니메이션 */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 네비게이션 호버 및 활성화 스타일 */
+        .nav-link {
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: #e2e8f0;
+            color: #4f46e5;
+        }
+
+        .nav-link.active {
+            background-color: #4f46e5;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* 공통 개념 카드 호버 */
+        .concept-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 포스트잇 팝업 애니메이션 */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            70% { transform: scale(1.05) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* 모바일 메뉴 드롭다운 애니메이션 */
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        #mobile-menu:not(.hidden) {
+            animation: slideDown 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4 md:justify-start md:space-x-10">
+                <div class="flex justify-start lg:w-0 lg:flex-1">
+                    <a href="#" class="text-2xl font-bold text-accent-primary flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        인공지능 윤리 탐구
+                    </a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="-mr-2 -my-2 md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary" aria-expanded="false">
+                        <span class="sr-only">Open menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-2 lg:space-x-4">
+                    <button onclick="switchTab('reliability')" id="nav-reliability" class="nav-link active px-3 py-2 rounded-md text-sm font-medium text-gray-700">신뢰성</button>
+                    <button onclick="switchTab('fairness')" id="nav-fairness" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">공정성</button>
+                    <button onclick="switchTab('ethics')" id="nav-ethics" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">윤리성</button>
+                    <button onclick="switchTab('transparency')" id="nav-transparency" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">투명성</button>
+                    <button onclick="switchTab('safety')" id="nav-safety" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">안전성</button>
+                    <button onclick="switchTab('accountability')" id="nav-accountability" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">책무성</button>
+                    <div class="h-6 w-px bg-gray-300 self-center"></div>
+                    <button onclick="switchTab('share')" id="nav-share" class="nav-link bg-pastel-purple text-accent-secondary hover:bg-purple-200 px-4 py-2 rounded-md text-sm font-bold flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        생각 공유
+                    </button>
+                </nav>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg absolute w-full">
+            <button onclick="switchTab('reliability'); toggleMobileMenu()" id="mob-nav-reliability" class="nav-link active block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">신뢰성</button>
+            <button onclick="switchTab('fairness'); toggleMobileMenu()" id="mob-nav-fairness" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">공정성</button>
+            <button onclick="switchTab('ethics'); toggleMobileMenu()" id="mob-nav-ethics" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">윤리성</button>
+            <button onclick="switchTab('transparency'); toggleMobileMenu()" id="mob-nav-transparency" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">투명성</button>
+            <button onclick="switchTab('safety'); toggleMobileMenu()" id="mob-nav-safety" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">안전성</button>
+            <button onclick="switchTab('accountability'); toggleMobileMenu()" id="mob-nav-accountability" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">책무성</button>
+            <button onclick="switchTab('share'); toggleMobileMenu()" id="mob-nav-share" class="nav-link bg-pastel-purple text-accent-secondary block px-3 py-2 rounded-md text-base font-bold w-full text-left mt-2">생각 공유</button>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <section id="tab-reliability" class="tab-content active">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">신뢰성 (Reliability)</h1>
+                <p class="text-lg text-gray-600">인공지능 시스템은 오류 가능성이 항상 있으며, 거짓 정보를 사실처럼 말하는 할루시네이션(환각) 현상이 발생할 수 있습니다.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Concept Card -->
+                <div class="bg-pastel-blue rounded-2xl p-6 concept-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-blue-500 p-2 rounded-full text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-blue-900">개념: 할루시네이션</h2>
+                    </div>
+                    <p class="text-blue-800 mb-4">
+                        생성형 인공지능이 실제로는 존재하지 않거나 검증되지 않은 정보를 마치 사실인 것처럼 그럴듯하게 생성하는 현상을 말합니다.
+                    </p>
+                    <ul class="list-disc list-inside text-blue-800 text-sm space-y-2">
+                        <li>AI의 답변을 무조건 신뢰하면 잘못된 정보를 퍼뜨릴 수 있습니다.</li>
+                        <li>사용자는 AI가 생성한 정보를 비판적으로 평가하고 교차 검증해야 합니다.</li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Module -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">💬 생성형 AI에게 질문하기 미니 퀴즈</h2>
+                    <p class="text-sm text-gray-600 mb-4">아래 버튼을 눌러 AI에게 질문을 던져보고, 답변을 평가해 보세요.</p>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 min-h-[200px] flex flex-col justify-between">
+                        <div id="chat-history" class="space-y-4 mb-4">
+                            <div class="text-right">
+                                <button id="btn-ask-ai" onclick="askAI()" class="bg-accent-primary text-white px-4 py-2 rounded-xl rounded-tr-none hover:bg-indigo-700 transition-colors shadow-sm inline-block">
+                                    "쇼팽 피아노 소나타 30번에 대해 알려줘"
+                                </button>
+                            </div>
+                            
+                            <!-- Loading Indicator -->
+                            <div id="ai-loading" class="hidden flex gap-2 items-center text-gray-500">
+                                <svg class="animate-spin h-5 w-5 text-accent-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span class="text-sm">AI가 답변을 생성 중입니다...</span>
+                            </div>
+
+                            <!-- AI Response -->
+                            <div id="ai-response" class="hidden">
+                                <div class="bg-white border border-gray-200 p-3 rounded-xl rounded-tl-none shadow-sm text-sm text-gray-700">
+                                    <p class="font-bold text-accent-primary mb-1">🤖 AI 에듀봇:</p>
+                                    <p>쇼팽의 피아노 소나타 30번, 작품 번호 Op. 58은 1844년에 작곡된 작품으로, 그의 중기 창작 기간에 속합니다. 이 소나타는 4개의 악장으로 이루어져 있으며, 특히 1악장의 역동적인 피아노 기교가 두드러집니다...</p>
+                                </div>
+                                
+                                <div id="ai-judgment" class="mt-4 text-center animate-[fadeIn_0.5s_ease-out]">
+                                    <p class="text-sm font-semibold text-gray-800 mb-2">🤔 이 답변은 사실일까요?</p>
+                                    <div class="flex justify-center gap-3">
+                                        <button onclick="judgeAnswer(true)" class="px-4 py-2 bg-green-100 text-green-700 border border-green-300 rounded-lg hover:bg-green-200 transition-colors font-medium">진짜 정보다</button>
+                                        <button onclick="judgeAnswer(false)" class="px-4 py-2 bg-red-100 text-red-700 border border-red-300 rounded-lg hover:bg-red-200 transition-colors font-medium">가짜 정보다</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="quiz-result" class="hidden p-3 rounded-lg text-sm font-medium text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-fairness" class="tab-content">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">공정성 (Fairness)</h1>
+                <p class="text-lg text-gray-600">인공지능으로 인한 차별을 방지하기 위해 편향되지 않은 데이터와 알고리즘을 사용해야 합니다.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Concept Card -->
+                <div class="bg-pastel-pink rounded-2xl p-6 concept-card flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-pink-500 p-2 rounded-full text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-pink-900">Gender Shades 프로젝트</h2>
+                        </div>
+                        <p class="text-pink-800 mb-4 text-sm">
+                            실제 상용화된 얼굴 인식 AI를 테스트한 결과, 학습 데이터의 편향성으로 인해 인종과 성별에 따라 인식률에 큰 차이가 발생했습니다.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white/70 p-4 rounded-xl">
+                        <h3 class="text-sm font-bold text-pink-900 mb-3">AI 얼굴 인식률 비교</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="font-medium text-gray-700">👦🏻 밝은 피부 남성</span>
+                                    <span class="font-bold text-blue-600">100%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="font-medium text-gray-700">👩🏿 어두운 피부 여성</span>
+                                    <span class="font-bold text-pink-600">65.5%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="bg-pink-500 h-2.5 rounded-full" style="width: 65.5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Module -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">📊 AI 면접관 평가 시뮬레이션</h2>
+                    <p class="text-sm text-gray-600 mb-4">과거 합격자 데이터(남성 80%, 여성 20%)를 학습한 AI가 두 지원자를 어떻게 평가하는지 확인해 보세요.</p>
+                    
+                    <div class="flex justify-center mb-4">
+                        <button id="btn-interview" onclick="runInterview()" class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
+                            AI 서류 평가 시작하기
+                        </button>
+                    </div>
+
+                    <div id="interview-simulation" class="space-y-4 hidden">
+                        <!-- Applicant A -->
+                        <div class="p-4 border rounded-xl bg-gray-50 relative overflow-hidden">
+                            <div class="flex items-center mb-2">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-xl">👦</div>
+                                <div>
+                                    <p class="font-bold text-gray-800">지원자 A (남성)</p>
+                                    <p class="text-xs text-gray-500">기본 역량 점수: 85점</p>
+                                </div>
+                            </div>
+                            <div id="bias-a" class="hidden mt-2 bg-blue-100 text-blue-800 text-xs p-2 rounded animate-[fadeIn_0.5s_ease-out]">
+                                ⚠️ [AI 분석] 과거 다수 합격자 성별 일치 <b>(+10점 가산점)</b>
+                            </div>
+                            <div id="score-a" class="hidden text-right mt-2 font-bold text-blue-600 text-lg">최종 점수: 95점</div>
+                        </div>
+                        
+                        <!-- Applicant B -->
+                        <div class="p-4 border rounded-xl bg-gray-50 relative overflow-hidden">
+                            <div class="flex items-center mb-2">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3 text-xl">👩</div>
+                                <div>
+                                    <p class="font-bold text-gray-800">지원자 B (여성)</p>
+                                    <p class="text-xs text-gray-500">기본 역량 점수: 90점</p>
+                                </div>
+                            </div>
+                            <div id="bias-b" class="hidden mt-2 bg-gray-200 text-gray-600 text-xs p-2 rounded animate-[fadeIn_0.5s_ease-out]">
+                                ℹ️ [AI 분석] 과거 합격자 데이터 부족 (가산점 없음)
+                            </div>
+                            <div id="score-b" class="hidden text-right mt-2 font-bold text-gray-800 text-lg">최종 점수: 90점</div>
+                        </div>
+
+                        <div id="interview-conclusion" class="hidden mt-4 p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-800 text-center font-medium animate-[fadeIn_1s_ease-out]">
+                            결과: 역량이 더 뛰어난 여성 지원자 B가 탈락했습니다.<br>데이터의 편향이 불공정한 결과를 초래했습니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-ethics" class="tab-content">
+             <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">윤리성 (Ethics)</h1>
+                <p class="text-lg text-gray-600">인공지능 시스템은 도덕적·윤리적으로 옳은 판단을 내려야 합니다.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Concept Card -->
+                <div class="bg-pastel-yellow rounded-2xl p-6 concept-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-yellow-500 p-2 rounded-full text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-yellow-900">개념: 윤리적 딜레마</h2>
+                    </div>
+                    <p class="text-yellow-800 mb-4 text-sm">
+                        두 가지 선택 중 어느 쪽을 선택해도 바람직하지 못한 결과가 나오는 곤란한 상황입니다. 정답이 없기 때문에 사회적 합의와 인간의 지속적인 개입(RLHF)이 필요합니다.
+                    </p>
+                    <div class="bg-white/60 p-3 rounded-lg text-yellow-900 text-sm">
+                        <strong>트롤리 딜레마 (Trolley Dilemma)</strong><br>
+                        브레이크가 고장 난 기차가 달릴 때, 선로를 바꿀 것인가 그대로 둘 것인가? 자율주행차 프로그래밍 시 피할 수 없는 질문입니다.
+                    </div>
+                </div>
+
+                <!-- Interactive Module -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">🚗 자율주행 모럴 머신 선택기</h2>
+                    <p class="text-sm text-gray-600 mb-4">브레이크가 고장 난 자율주행 자동차입니다. 당신이 AI라면 어떤 선택을 하겠습니까? (클릭하여 선택)</p>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 mb-4">
+                        <button onclick="chooseDilemma('A')" class="flex-1 border-2 border-transparent hover:border-accent-primary rounded-xl p-4 cursor-pointer transition-all bg-gray-50 text-center shadow-sm hover:shadow-md group">
+                            <div class="h-24 bg-gray-200 rounded-lg mb-3 flex items-center justify-center text-4xl group-hover:scale-105 transition-transform">
+                                🚗 💥 🚶‍♂️
+                            </div>
+                            <h3 class="font-bold text-gray-800 mb-1">상황 A: 보행자 보호 포기</h3>
+                            <p class="text-xs text-gray-500">방향을 바꾸어 보행자 1명과 충돌<br>(탑승자 3명 생존)</p>
+                        </button>
+                        
+                        <button onclick="chooseDilemma('B')" class="flex-1 border-2 border-transparent hover:border-accent-primary rounded-xl p-4 cursor-pointer transition-all bg-gray-50 text-center shadow-sm hover:shadow-md group">
+                             <div class="h-24 bg-gray-200 rounded-lg mb-3 flex items-center justify-center text-4xl group-hover:scale-105 transition-transform">
+                                🚧 💥 🚗
+                            </div>
+                            <h3 class="font-bold text-gray-800 mb-1">상황 B: 탑승자 보호 포기</h3>
+                            <p class="text-xs text-gray-500">경로를 유지하여 콘크리트 장벽과 충돌<br>(탑승자 3명 희생)</p>
+                        </button>
+                    </div>
+                    
+                    <div id="dilemma-result" class="hidden p-4 rounded-lg text-sm text-center font-medium animate-[fadeIn_0.3s_ease-out]"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-transparency" class="tab-content">
+             <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">투명성 (Transparency)</h1>
+                <p class="text-lg text-gray-600">인공지능 시스템이 사람에게 영향을 미치는 결정 과정을 투명하게 설명하여야 합니다.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Concept Card -->
+                <div class="bg-pastel-green rounded-2xl p-6 concept-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-green-500 p-2 rounded-full text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-green-900">개념: 블랙박스와 XAI</h2>
+                    </div>
+                    <p class="text-green-800 mb-3 text-sm">
+                        <strong>블랙박스(Black Box) AI:</strong> 결과만 알려주고 도출 과정은 숨겨져 있어 사용자가 납득하기 어렵습니다.
+                    </p>
+                    <p class="text-green-800 text-sm">
+                        <strong>설명 가능한 인공지능 (XAI):</strong> 의료, 대출 심사 등 중요한 분야에서 AI가 "어떤 근거로 결론을 도출했는지" 시각적/텍스트로 명확하게 설명(Explainable)하여 신뢰성을 높입니다.
+                    </p>
+                </div>
+
+                <!-- Interactive Module -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">🔍 블랙박스 AI vs XAI 비교하기</h2>
+                    <p class="text-sm text-gray-600 mb-6">스위치를 눌러 설명 가능한 AI(XAI) 시스템을 켜보세요.</p>
+                    
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                        <span id="label-blackbox" class="font-bold text-gray-800">기존 AI (블랙박스)</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="xai-toggle" class="sr-only peer" onchange="toggleXAI(this.checked)">
+                            <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-500 shadow-inner"></div>
+                        </label>
+                        <span id="label-xai" class="text-gray-400">설명 가능한 AI (XAI)</span>
+                    </div>
+
+                    <div class="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-50 h-[180px]">
+                        <!-- Blackbox View -->
+                        <div id="view-blackbox" class="absolute inset-0 p-6 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
+                            <span class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-bold text-lg mb-2">서류 심사 불합격</span>
+                            <p class="text-sm text-gray-500 bg-gray-200 px-3 py-1 rounded">사유: 알 수 없음 (제공되지 않음)</p>
+                            <p class="text-xs text-gray-400 mt-3 text-center">지원자: "왜 떨어졌는지 모르겠네... 답답해!"</p>
+                        </div>
+                        
+                        <!-- XAI View -->
+                        <div id="view-xai" class="absolute inset-0 p-5 transition-opacity duration-300 opacity-0 pointer-events-none flex flex-col justify-center bg-green-50">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full font-bold text-sm">서류 심사 불합격</span>
+                                <span class="bg-green-200 text-green-800 text-xs px-2 py-1 rounded font-bold">✓ XAI 분석 완료</span>
+                            </div>
+                            <p class="text-sm font-bold text-gray-800 mb-2">AI 판단 근거 리포트:</p>
+                            <div class="space-y-2 w-full">
+                                <div class="text-xs text-gray-600 flex justify-between"><span>직무 관련 자격증 미비</span> <span class="font-bold text-red-500">-40% 감점</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5"><div class="bg-red-400 h-1.5 rounded-full" style="width: 40%"></div></div>
+                                
+                                <div class="text-xs text-gray-600 flex justify-between"><span>필수 실무 경험 1년 부족</span> <span class="font-bold text-red-500">-60% 감점</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5"><div class="bg-red-500 h-1.5 rounded-full" style="width: 60%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-safety" class="tab-content">
+             <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">안전성 (Safety)</h1>
+                <p class="text-lg text-gray-600">인공지능 시스템이 외부의 공격이나 위협에 대처할 수 있고, 인간에게 해를 끼치지 않아야 합니다.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Concept Card -->
+                <div class="bg-pastel-orange rounded-2xl p-6 concept-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-orange-500 p-2 rounded-full text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-orange-900">개념: AI 악용과 위협</h2>
+                    </div>
+                    <ul class="text-orange-800 text-sm space-y-3">
+                        <li><strong>적대적 패치(Adversarial Patch):</strong> 원래 이미지에 딥러닝 모델의 오작동을 일으키는 작은 조각을 고의로 추가하여 시스템을 교란하는 해킹 기법.</li>
+                        <li><strong>딥페이크(Deepfake):</strong> AI를 이용해 진짜처럼 보이는 가짜 영상/음성을 만들어 사기, 여론 조작 등에 악용하는 범죄 기술.</li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Module -->
+                <div class="space-y-4">
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">① 적대적 패치 시뮬레이션</h3>
+                        <div class="flex items-center justify-center gap-6 mb-4">
+                            <div id="sign-vision" class="text-6xl transition-transform duration-300">🛑</div>
+                            <div class="text-left">
+                                <p class="text-xs text-gray-500 uppercase tracking-wide">자율주행 AI 시각 인식 결과</p>
+                                <p id="ai-prediction" class="text-xl font-bold text-red-600">"정지 (STOP)"</p>
+                            </div>
+                        </div>
+                        <button id="btn-patch" onclick="applyPatch()" class="bg-orange-100 hover:bg-orange-200 text-orange-700 border border-orange-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            🦋 나방 모양 해킹 패치 붙이기
+                        </button>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">② 딥페이크 판별 체험</h3>
+                        <p class="text-xs text-gray-600 mb-3">다음 중 AI가 생성한 가짜 인물은 누구일까요?</p>
+                        <div class="flex gap-4 justify-center mb-3">
+                            <!-- Image 1 -->
+                            <div onclick="judgeDeepfake('A')" class="cursor-pointer hover:ring-4 ring-orange-200 rounded-lg p-2 bg-gray-50 border transition-all flex flex-col items-center">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" alt="A 인물" class="w-16 h-16 rounded-md mb-2 object-cover shadow-sm">
+                                <span class="text-xs font-bold text-gray-700">A 인물</span>
+                            </div>
+                            <!-- Image 2 -->
+                            <div onclick="judgeDeepfake('B')" class="cursor-pointer hover:ring-4 ring-orange-200 rounded-lg p-2 bg-gray-50 border transition-all flex flex-col items-center">
+                                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop" alt="B 인물" class="w-16 h-16 rounded-md mb-2 object-cover shadow-sm">
+                                <span class="text-xs font-bold text-gray-700">B 인물</span>
+                            </div>
+                        </div>
+                        <p id="deepfake-result" class="hidden text-sm font-medium text-orange-700 animate-[fadeIn_0.3s_ease-out]"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-accountability" class="tab-content">
+             <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">책무성 (Accountability)</h1>
+                <p class="text-lg text-gray-600">인공지능과 관련된 문제 상황에 책임이나 의무를 지려는 태도를 가져야 합니다.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Concept Card -->
+                <div class="bg-pastel-gray rounded-2xl p-6 concept-card">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-gray-700 p-2 rounded-full text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-900">개념: 책임 소재 규명</h2>
+                    </div>
+                    <p class="text-gray-800 mb-4 text-sm">
+                        AI 챗봇 '이루다'는 사용자의 무분별한 데이터를 학습하여 차별·혐오 발언을 하고, 개인정보 유출 논란으로 20여 일 만에 서비스가 중단되었습니다. 이러한 문제의 책임은 누구에게 있을까요?
+                    </p>
+                    <ul class="text-sm text-gray-700 space-y-2 bg-white/50 p-3 rounded-lg">
+                        <li>👩‍💻 <strong>개발자:</strong> 윤리적 설계 및 필터링 부족</li>
+                        <li>👤 <strong>사용자:</strong> 고의적인 악성 데이터(혐오 발언) 주입</li>
+                        <li>🏢 <strong>운영자:</strong> 위험 모니터링 및 사전 규제 실패</li>
+                    </ul>
+                </div>
+
+                <!-- Interactive Module -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">⚖️ 누구의 책임이 가장 클까요?</h2>
+                    <p class="text-sm text-gray-500 mb-6">슬라이더를 조절하여 여러분이 생각하는 책임의 비율을 정해보고, 총합 100% 차트를 확인하세요.</p>
+                    
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between text-sm font-medium mb-1">
+                                <span class="text-blue-700">👩‍💻 개발자 책임</span>
+                                <span id="val-dev" class="text-gray-700">33</span>
+                            </div>
+                            <input type="range" id="slide-dev" min="0" max="100" value="33" oninput="updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-medium mb-1">
+                                <span class="text-pink-700">👤 사용자 책임</span>
+                                <span id="val-user" class="text-gray-700">33</span>
+                            </div>
+                            <input type="range" id="slide-user" min="0" max="100" value="33" oninput="updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-600">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-medium mb-1">
+                                <span class="text-yellow-600">🏢 운영·관리자 책임</span>
+                                <span id="val-op" class="text-gray-700">34</span>
+                            </div>
+                            <input type="range" id="slide-op" min="0" max="100" value="34" oninput="updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-500">
+                        </div>
+                    </div>
+
+                    <!-- Visual Chart -->
+                    <div class="mt-6">
+                        <p class="text-xs text-gray-500 mb-2 text-center">나의 책임 분배 결과 (자동 100% 환산)</p>
+                        <div class="flex w-full h-8 rounded-lg overflow-hidden shadow-inner bg-gray-100">
+                            <div id="bar-dev" class="bg-blue-500 transition-all duration-300 flex items-center justify-center text-white text-xs font-bold" style="width: 33%">33%</div>
+                            <div id="bar-user" class="bg-pink-500 transition-all duration-300 flex items-center justify-center text-white text-xs font-bold" style="width: 33%">33%</div>
+                            <div id="bar-op" class="bg-yellow-500 transition-all duration-300 flex items-center justify-center text-white text-xs font-bold" style="width: 34%">34%</div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-3 text-center">* 정답은 없습니다. 모두가 각자의 위치에서 책무성을 다해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-share" class="tab-content">
+            <div class="mb-8 text-center max-w-2xl mx-auto">
+                <h1 class="text-3xl font-bold text-accent-secondary mb-4">내 생각 공유하기</h1>
+                <p class="text-lg text-gray-600">인공지능과 인간이 공존하기 위해 가장 중요하다고 생각하는 윤리적 쟁점은 무엇인가요? 실시간으로 모두와 의견을 나눠보세요.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto space-y-8">
+                
+                <!-- Word Cloud Section -->
+                <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">☁️</span> AI 윤리 워드클라우드 (실시간)
+                    </h2>
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="keyword-input" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent-secondary focus:border-accent-secondary" placeholder="AI 윤리를 한 단어로 표현한다면? (예: 책임감, 공정성)" onkeypress="if(event.key === 'Enter') window.addKeyword()">
+                        <button onclick="window.addKeyword()" class="bg-accent-secondary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-purple-700 transition-colors shadow-sm whitespace-nowrap">키워드 추가</button>
+                    </div>
+                    <div id="wordcloud-container" class="w-full h-[250px] bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center overflow-hidden">
+                        <canvas id="word-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Post-it Input Form -->
+                <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">📝</span> 나의 의견 남기기
+                    </h2>
+                    <form id="comment-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="student-name" class="block text-sm font-medium text-gray-700 mb-1">이름 (닉네임)</label>
+                                <input type="text" id="student-name" required class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-accent-secondary sm:text-sm" placeholder="홍길동">
+                            </div>
+                            <div>
+                                <label for="topic-select" class="block text-sm font-medium text-gray-700 mb-1">관심 쟁점</label>
+                                <select id="topic-select" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-accent-secondary sm:text-sm">
+                                    <option value="신뢰성">신뢰성</option>
+                                    <option value="공정성">공정성</option>
+                                    <option value="윤리성">윤리성</option>
+                                    <option value="투명성">투명성</option>
+                                    <option value="안전성">안전성</option>
+                                    <option value="책무성">책무성</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="student-thought" class="block text-sm font-medium text-gray-700 mb-1">나의 의견</label>
+                            <textarea id="student-thought" rows="3" required class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-accent-secondary sm:text-sm" placeholder="AI 윤리 문제에 대한 나의 생각이나 해결 방안을 적어보세요."></textarea>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-bold rounded-md text-white bg-gray-800 hover:bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                                포스트잇 붙이기 📌
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Post-it Grid Board -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">📌</span> 공유 게시판 (실시간)
+                    </h3>
+                    <div id="comments-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                        <!-- Post-its will be dynamically rendered here via Firebase -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // --- 1. 신뢰성 (Reliability) 로직 ---
+            function askAI() {
+                document.getElementById('btn-ask-ai').classList.add('opacity-50', 'cursor-not-allowed');
+                document.getElementById('ai-loading').classList.remove('hidden');
+                document.getElementById('ai-response').classList.add('hidden');
+                document.getElementById('quiz-result').classList.add('hidden');
+                
+                setTimeout(() => {
+                    document.getElementById('ai-loading').classList.add('hidden');
+                    document.getElementById('ai-response').classList.remove('hidden');
+                }, 1500);
+            }
+
+            function judgeAnswer(isReal) {
+                const resultDiv = document.getElementById('quiz-result');
+                resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+                
+                if (!isReal) {
+                    resultDiv.classList.add('bg-green-100', 'text-green-800');
+                    resultDiv.innerHTML = "🎉 정답입니다! 쇼팽은 피아노 소나타를 3번까지만 작곡했습니다. AI가 그럴듯한 <strong>가짜 정보(할루시네이션)</strong>를 만들어냈습니다.";
+                } else {
+                    resultDiv.classList.add('bg-red-100', 'text-red-800');
+                    resultDiv.innerHTML = "❌ 틀렸습니다. 쇼팽은 평생 3개의 피아노 소나타만 작곡했습니다. AI의 <strong>거짓말(할루시네이션)</strong>에 속으셨네요!";
+                }
+            }
+
+            // --- 2. 공정성 (Fairness) 로직 ---
+            function runInterview() {
+                const btn = document.getElementById('btn-interview');
+                btn.innerText = "평가 진행 중...";
+                btn.classList.add('opacity-50');
+                document.getElementById('interview-simulation').classList.remove('hidden');
+                
+                document.getElementById('bias-a').classList.add('hidden');
+                document.getElementById('score-a').classList.add('hidden');
+                document.getElementById('bias-b').classList.add('hidden');
+                document.getElementById('score-b').classList.add('hidden');
+                document.getElementById('interview-conclusion').classList.add('hidden');
+
+                setTimeout(() => { document.getElementById('bias-a').classList.remove('hidden'); }, 1000);
+                setTimeout(() => { document.getElementById('score-a').classList.remove('hidden'); }, 1500);
+                setTimeout(() => { document.getElementById('bias-b').classList.remove('hidden'); }, 2500);
+                setTimeout(() => { document.getElementById('score-b').classList.remove('hidden'); }, 3000);
+                setTimeout(() => { 
+                    document.getElementById('interview-conclusion').classList.remove('hidden'); 
+                    btn.innerText = "평가 완료";
+                }, 4000);
+            }
+
+            // --- 3. 윤리성 (Ethics) 로직 ---
+            function chooseDilemma(choice) {
+                const resultBox = document.getElementById('dilemma-result');
+                resultBox.classList.remove('hidden', 'bg-blue-50', 'text-blue-800', 'bg-orange-50', 'text-orange-800');
+                
+                if (choice === 'A') {
+                    resultBox.classList.add('bg-blue-50', 'text-blue-800');
+                    resultBox.innerHTML = "<strong>상황 A 선택:</strong> 다수를 구하기 위한 공리주의적 선택일 수 있으나, 무고한 보행자의 생명권 침해라는 <strong>윤리적 딜레마</strong>가 발생합니다. 정답은 없습니다.";
+                } else {
+                    resultBox.classList.add('bg-orange-50', 'text-orange-800');
+                    resultBox.innerHTML = "<strong>상황 B 선택:</strong> 탑승자의 안전과 기계의 원래 경로 유지를 우선시한 판단입니다. 하지만 결과적으로 인명 피해를 방치했다는 <strong>윤리적 비판</strong>을 피하기 어렵습니다. 정답은 없습니다.";
+                }
+            }
+
+            // --- 4. 투명성 (Transparency) 로직 ---
+            function toggleXAI(isChecked) {
+                const lblBlackbox = document.getElementById('label-blackbox');
+                const lblXai = document.getElementById('label-xai');
+                const viewBlackbox = document.getElementById('view-blackbox');
+                const viewXai = document.getElementById('view-xai');
+
+                if (isChecked) {
+                    lblBlackbox.classList.remove('font-bold', 'text-gray-800');
+                    lblBlackbox.classList.add('text-gray-400');
+                    lblXai.classList.remove('text-gray-400');
+                    lblXai.classList.add('font-bold', 'text-green-700');
+                    
+                    viewBlackbox.classList.remove('opacity-100');
+                    viewBlackbox.classList.add('opacity-0', 'pointer-events-none');
+                    viewXai.classList.remove('opacity-0', 'pointer-events-none');
+                    viewXai.classList.add('opacity-100');
+                } else {
+                    lblXai.classList.remove('font-bold', 'text-green-700');
+                    lblXai.classList.add('text-gray-400');
+                    lblBlackbox.classList.remove('text-gray-400');
+                    lblBlackbox.classList.add('font-bold', 'text-gray-800');
+                    
+                    viewXai.classList.remove('opacity-100');
+                    viewXai.classList.add('opacity-0', 'pointer-events-none');
+                    viewBlackbox.classList.remove('opacity-0', 'pointer-events-none');
+                    viewBlackbox.classList.add('opacity-100');
+                }
+            }
+
+            // --- 5. 안전성 (Safety) 로직 ---
+            function applyPatch() {
+                const vision = document.getElementById('sign-vision');
+                const pred = document.getElementById('ai-prediction');
+                
+                vision.innerHTML = "🛑<span class='absolute -ml-6 mt-4 text-2xl'>🦋</span>";
+                vision.classList.add('scale-110');
+                
+                pred.innerHTML = "AI 모델 오작동: <span class='font-bold text-blue-600'>속도제한 80 (SPEED 80)</span>";
+                
+                document.getElementById('btn-patch').innerText = "패치가 적용됨 (새로고침하여 복구)";
+                document.getElementById('btn-patch').classList.add('opacity-50', 'pointer-events-none');
+            }
+
+            function judgeDeepfake(choice) {
+                const res = document.getElementById('deepfake-result');
+                res.classList.remove('hidden');
+                res.innerHTML = "정답: 사실 두 이미지 모두 AI가 생성한 가짜 인물입니다(WhichFaceIsReal 사례 참조). 생성 기술이 발전함에 따라 <strong>비판적으로 판단하는 디지털 리터러시</strong>가 필수적입니다.";
+            }
+
+            // --- 6. 책무성 (Accountability) 로직 ---
+            function updateChart() {
+                let vDev = parseInt(document.getElementById('slide-dev').value);
+                let vUser = parseInt(document.getElementById('slide-user').value);
+                let vOp = parseInt(document.getElementById('slide-op').value);
+                
+                let total = vDev + vUser + vOp;
+                if(total === 0) { total = 1; vDev = 1; }
+
+                let pDev = Math.round((vDev / total) * 100);
+                let pUser = Math.round((vUser / total) * 100);
+                let pOp = 100 - pDev - pUser;
+
+                document.getElementById('val-dev').innerText = vDev;
+                document.getElementById('val-user').innerText = vUser;
+                document.getElementById('val-op').innerText = vOp;
+
+                document.getElementById('bar-dev').style.width = pDev + '%';
+                document.getElementById('bar-dev').innerText = pDev + '%';
+                document.getElementById('bar-user').style.width = pUser + '%';
+                document.getElementById('bar-user').innerText = pUser + '%';
+                document.getElementById('bar-op').style.width = pOp + '%';
+                document.getElementById('bar-op').innerText = pOp + '%';
+            }
+
+            // --- UI/Navigation 로직 ---
+            const tabs = ['reliability', 'fairness', 'ethics', 'transparency', 'safety', 'accountability', 'share'];
+
+            function switchTab(tabId) {
+                tabs.forEach(t => {
+                    document.getElementById(`tab-${t}`).classList.remove('active');
+                    
+                    const navBtn = document.getElementById(`nav-${t}`);
+                    if(navBtn) {
+                        if(t === 'share') {
+                            navBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                        } else {
+                            navBtn.classList.remove('active', 'bg-indigo-600', 'text-white', 'font-semibold', 'shadow-md');
+                            navBtn.classList.add('text-gray-700', 'hover:bg-gray-200');
+                        }
+                    }
+
+                    const mobNavBtn = document.getElementById(`mob-nav-${t}`);
+                    if(mobNavBtn) {
+                         if(t === 'share') {
+                            mobNavBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                        } else {
+                            mobNavBtn.classList.remove('active', 'bg-indigo-50', 'text-indigo-700', 'border-l-4', 'border-indigo-600');
+                            mobNavBtn.classList.add('text-gray-700', 'hover:bg-gray-50');
+                        }
+                    }
+                });
+
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+
+                const activeNavBtn = document.getElementById(`nav-${tabId}`);
+                if(activeNavBtn) {
+                    if(tabId === 'share') {
+                        activeNavBtn.classList.add('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                    } else {
+                        activeNavBtn.classList.remove('text-gray-700', 'hover:bg-gray-200');
+                        activeNavBtn.classList.add('active', 'bg-indigo-600', 'text-white', 'font-semibold', 'shadow-md');
+                    }
+                }
+
+                const activeMobNavBtn = document.getElementById(`mob-nav-${tabId}`);
+                 if(activeMobNavBtn) {
+                    if(tabId === 'share') {
+                        activeMobNavBtn.classList.add('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                    } else {
+                        activeMobNavBtn.classList.remove('text-gray-700', 'hover:bg-gray-50');
+                        activeMobNavBtn.classList.add('active', 'bg-indigo-50', 'text-indigo-700', 'border-l-4', 'border-indigo-600');
+                    }
+                }
+                
+                // 워드클라우드 렌더링 호출
+                if(tabId === 'share') {
+                    setTimeout(() => {
+                        if(typeof window.renderWordCloud === 'function') window.renderWordCloud();
+                    }, 50); 
+                }
+            }
+
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            }
+
+            window.onload = () => {
+                switchTab('reliability');
+            };
+            
+            window.addEventListener('resize', () => {
+                if(document.getElementById('tab-share').classList.contains('active')){
+                    if(typeof window.renderWordCloud === 'function') window.renderWordCloud();
+                }
+            });
+        </script>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+            import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+            import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+            // 1. Firebase Config Setup
+            let firebaseConfig;
+            if (typeof __firebase_config !== 'undefined') {
+                firebaseConfig = JSON.parse(__firebase_config);
+            } else {
+                /*
+                 * 🚨 중요: GitHub Pages 등 외부 서버 배포 시 주의사항 🚨
+                 * 아래 설정값을 본인이 생성한 Firebase 프로젝트의 구성(Config) 정보로 덮어써야 실시간 기능이 작동합니다.
+                 * Firebase Console -> 프로젝트 설정 -> 내 앱 -> Firebase SDK snippet(구성)에서 복사하세요.
+                 */
+                firebaseConfig = {
+                     apiKey: "AIzaSyCgm7fwpjeLzO9ib84jVhMjoxsuyZhPhxM",
+  authDomain: "ai-ethics-7fae5.firebaseapp.com",
+  projectId: "ai-ethics-7fae5",
+  storageBucket: "ai-ethics-7fae5.firebasestorage.app",
+  messagingSenderId: "459720199972",
+  appId: "1:459720199972:web:dc8bde0b67ce710e59edb1"
+
+                };
+                console.warn("외부 웹 배포 환경: Firebase 실시간 연동을 위해서는 firebaseConfig 설정값을 직접 교체해 주셔야 합니다.");
+            }
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            
+            // 앱 고유 식별자 설정
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'ai-ethics-shared-app';
+            let currentUser = null;
+
+            // 글로벌 데이터 참조
+            window.wordsData = [];
+            window.postsData = [];
+            window.postColors = ['bg-pastel-yellow', 'bg-pastel-blue', 'bg-pastel-pink', 'bg-pastel-green', 'bg-pastel-orange', 'bg-pastel-purple'];
+
+            // 2. 인증(Auth) 및 실시간 리스너 
+            async function initApp() {
+                try {
+                    // 환경변수가 제공되면 CustomToken, 없으면 익명 로그인 처리
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        const userCredential = await signInWithCustomToken(auth, __initial_auth_token);
+                        currentUser = userCredential.user;
+                    } else {
+                        const userCredential = await signInAnonymously(auth);
+                        currentUser = userCredential.user;
+                    }
+                    
+                    initRealtimeListeners();
+                } catch (error) {
+                    console.error("Firebase Auth Error:", error);
+                }
+            }
+
+            function initRealtimeListeners() {
+                if (!currentUser) return;
+
+                // [워드클라우드] 실시간 데이터 리스너
+                const keywordsRef = collection(db, 'artifacts', appId, 'public', 'data', 'keywords');
+                onSnapshot(keywordsRef, (snapshot) => {
+                    window.wordsData = [];
+                    snapshot.forEach(doc => {
+                        window.wordsData.push([doc.data().text, doc.data().count]);
+                    });
+                    
+                    if (document.getElementById('tab-share').classList.contains('active')) {
+                        window.renderWordCloud();
+                    }
+                }, (error) => console.error("키워드 로드 에러:", error));
+
+                // [포스트잇] 실시간 데이터 리스너
+                const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+                onSnapshot(postsRef, (snapshot) => {
+                    window.postsData = [];
+                    snapshot.forEach(doc => {
+                        window.postsData.push({ id: doc.id, ...doc.data() });
+                    });
+                    
+                    // 최신 글이 위로 오도록 내림차순 정렬
+                    window.postsData.sort((a, b) => b.timestamp - a.timestamp); 
+                    window.renderPosts();
+                }, (error) => console.error("포스트잇 로드 에러:", error));
+            }
+
+            // 3. UI 렌더링 (Firebase 데이터를 바탕으로 화면 갱신)
+            const wcColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'];
+            
+            window.renderWordCloud = function() {
+                const canvas = document.getElementById('word-canvas');
+                const container = document.getElementById('wordcloud-container');
+                
+                if(!canvas || !container) return;
+                
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (window.wordsData.length === 0) {
+                    ctx.font = '15px Inter';
+                    ctx.fillStyle = '#9ca3af'; // text-gray-400
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('아직 등록된 키워드가 없습니다. 첫 번째 키워드를 추가해보세요!', canvas.width / 2, canvas.height / 2);
+                    return;
+                }
+                
+                if(typeof WordCloud !== 'undefined') {
+                    WordCloud(canvas, {
+                        list: window.wordsData,
+                        fontFamily: 'Inter, Pretendard, sans-serif',
+                        weightFactor: function (size) { return size * 3; },
+                        color: function() { return wcColors[Math.floor(Math.random() * wcColors.length)]; },
+                        rotateRatio: 0, 
+                        backgroundColor: 'transparent',
+                        gridSize: 8
+                    });
+                }
+            };
+
+            window.renderPosts = function() {
+                const list = document.getElementById('comments-list');
+                if(!list) return;
+
+                list.innerHTML = '';
+                
+                if (window.postsData.length === 0) {
+                    list.innerHTML = `
+                        <div class="col-span-full text-center text-gray-500 py-10 bg-white border border-dashed border-gray-300 rounded-xl">
+                            아직 등록된 의견이 없습니다.<br>여러분의 생각을 포스트잇으로 가장 먼저 남겨보세요!
+                        </div>
+                    `;
+                    return;
+                }
+
+                window.postsData.forEach((post) => {
+                    // 시간값을 이용해 일정한 기울기 계산 (랜덤 플리커링 방지)
+                    const rotateDeg = ((post.timestamp % 6) - 3).toFixed(1);
+                    
+                    // 본인이 작성한 포스트잇만 삭제 버튼 노출
+                    const isOwner = currentUser && post.userId === currentUser.uid;
+                    const deleteBtnHtml = isOwner ? `
+                        <button onclick="window.deletePost('${post.id}')" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors" title="삭제">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    ` : '';
+
+                    const postHTML = `
+                        <div class="h-full transition-all duration-300 hover:z-10 hover:scale-105 hover:rotate-0" style="transform: rotate(${rotateDeg}deg);">
+                            <div class="relative ${post.color} rounded-bl-3xl rounded-tr-lg rounded-tl-lg rounded-br-lg p-5 shadow-[3px_5px_15px_rgba(0,0,0,0.15)] flex flex-col h-full border border-black/5 animate-[popIn_0.4s_cubic-bezier(0.175,0.885,0.32,1.275)_forwards]">
+                                ${deleteBtnHtml}
+                                <div class="flex justify-between items-start mb-3 pr-6">
+                                    <span class="font-bold text-sm text-gray-900">${escapeHTML(post.name)}</span>
+                                    <span class="bg-white/60 text-gray-800 text-xs px-2 py-1 rounded font-bold shadow-sm">${escapeHTML(post.topic)}</span>
+                                </div>
+                                <p class="text-gray-800 text-sm whitespace-pre-line flex-grow font-medium leading-relaxed">${escapeHTML(post.content)}</p>
+                                
+                                <div class="mt-4 pt-3 border-t border-black/10 flex justify-end">
+                                    <button onclick="window.likePost('${post.id}')" class="flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors group">
+                                        <svg class="w-5 h-5 ${post.likes > 0 ? 'text-red-500 fill-red-500' : 'group-hover:fill-red-200'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                        <span class="text-xs font-bold ${post.likes > 0 ? 'text-red-500' : ''}">${post.likes}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    list.insertAdjacentHTML('beforeend', postHTML);
+                });
+            };
+
+            function escapeHTML(str) {
+                return str.replace(/[&<>'"]/g, tag => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+                }[tag]));
+            }
+
+            // 4. 데이터 CRUD 액션 등록
+            window.addKeyword = async function() {
+                if (!currentUser) return;
+                const input = document.getElementById('keyword-input');
+                const keyword = input.value.trim();
+                if(!keyword) return;
+
+                // Document ID로 사용할 수 있도록 특수문자 제거
+                const docId = keyword.replace(/[^a-zA-Z0-9가-힣]/g, '_');
+                if(!docId) return;
+
+                const keywordRef = doc(db, 'artifacts', appId, 'public', 'data', 'keywords', docId);
+                
+                try {
+                    const docSnap = await getDoc(keywordRef);
+                    if (docSnap.exists()) {
+                        // 이미 존재하는 단어면 카운트 증가
+                        await updateDoc(keywordRef, { count: docSnap.data().count + 2 });
+                    } else {
+                        // 새 단어 등록
+                        await setDoc(keywordRef, { text: keyword, count: 5 });
+                    }
+                    input.value = '';
+                } catch(e) {
+                    console.error("키워드 저장 에러:", e);
+                }
+            };
+
+            window.submitPost = async function(e) {
+                e.preventDefault();
+                if (!currentUser) return;
+                
+                const name = document.getElementById('student-name').value;
+                const topic = document.getElementById('topic-select').value;
+                const content = document.getElementById('student-thought').value;
+
+                if(!name || !content) return;
+
+                const randomColor = window.postColors[Math.floor(Math.random() * window.postColors.length)];
+
+                const newPost = {
+                    name: name,
+                    topic: topic,
+                    content: content,
+                    likes: 0,
+                    color: randomColor,
+                    timestamp: Date.now(),
+                    userId: currentUser.uid // 작성자 식별을 위한 유저 UID 보관
+                };
+
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), newPost);
+                    document.getElementById('comment-form').reset();
+                } catch (error) {
+                    console.error("포스트잇 업로드 에러:", error);
+                }
+            };
+
+            // Form Submit 이벤트 리스너 연결
+            document.getElementById('comment-form').addEventListener('submit', window.submitPost);
+
+            window.deletePost = async function(id) {
+                if (!currentUser) return;
+                try {
+                    // 문서 삭제
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'posts', id));
+                } catch (error) {
+                    console.error("포스트잇 삭제 에러:", error);
+                }
+            };
+
+            window.likePost = async function(id) {
+                if (!currentUser) return;
+                const post = window.postsData.find(p => p.id === id);
+                if (post) {
+                    try {
+                        // 좋아요 1 증가
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'posts', id), {
+                            likes: post.likes + 1
+                        });
+                    } catch (error) {
+                        console.error("좋아요 에러:", error);
+                    }
+                }
+            };
+
+            // 애플리케이션 기동
+            initApp();
+        </script>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-center items-center">
+            <p class="text-sm text-gray-500 font-medium">
+                Copyright &copy; 2026 kankanclass. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
