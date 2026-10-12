@@ -115,7 +115,7 @@
                 </div>
                 <!-- Mobile menu button -->
                 <div class="-mr-2 -my-2 md:hidden">
-                    <button type="button" onclick="toggleMobileMenu()" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary" aria-expanded="false">
+                    <button type="button" onclick="window.toggleMobileMenu()" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-primary" aria-expanded="false">
                         <span class="sr-only">Open menu</span>
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -124,14 +124,14 @@
                 </div>
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-2 lg:space-x-4">
-                    <button onclick="switchTab('reliability')" id="nav-reliability" class="nav-link active px-3 py-2 rounded-md text-sm font-medium text-gray-700">신뢰성</button>
-                    <button onclick="switchTab('fairness')" id="nav-fairness" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">공정성</button>
-                    <button onclick="switchTab('ethics')" id="nav-ethics" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">윤리성</button>
-                    <button onclick="switchTab('transparency')" id="nav-transparency" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">투명성</button>
-                    <button onclick="switchTab('safety')" id="nav-safety" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">안전성</button>
-                    <button onclick="switchTab('accountability')" id="nav-accountability" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">책무성</button>
+                    <button onclick="window.switchTab('reliability')" id="nav-reliability" class="nav-link active px-3 py-2 rounded-md text-sm font-medium text-gray-700">신뢰성</button>
+                    <button onclick="window.switchTab('fairness')" id="nav-fairness" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">공정성</button>
+                    <button onclick="window.switchTab('ethics')" id="nav-ethics" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">윤리성</button>
+                    <button onclick="window.switchTab('transparency')" id="nav-transparency" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">투명성</button>
+                    <button onclick="window.switchTab('safety')" id="nav-safety" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">안전성</button>
+                    <button onclick="window.switchTab('accountability')" id="nav-accountability" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">책무성</button>
                     <div class="h-6 w-px bg-gray-300 self-center"></div>
-                    <button onclick="switchTab('share')" id="nav-share" class="nav-link bg-pastel-purple text-accent-secondary hover:bg-purple-200 px-4 py-2 rounded-md text-sm font-bold flex items-center gap-1">
+                    <button onclick="window.switchTab('share')" id="nav-share" class="nav-link bg-pastel-purple text-accent-secondary hover:bg-purple-200 px-4 py-2 rounded-md text-sm font-bold flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                         생각 공유
                     </button>
@@ -140,13 +140,13 @@
         </div>
         
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg absolute w-full">
-            <button onclick="switchTab('reliability'); toggleMobileMenu()" id="mob-nav-reliability" class="nav-link active block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">신뢰성</button>
-            <button onclick="switchTab('fairness'); toggleMobileMenu()" id="mob-nav-fairness" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">공정성</button>
-            <button onclick="switchTab('ethics'); toggleMobileMenu()" id="mob-nav-ethics" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">윤리성</button>
-            <button onclick="switchTab('transparency'); toggleMobileMenu()" id="mob-nav-transparency" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">투명성</button>
-            <button onclick="switchTab('safety'); toggleMobileMenu()" id="mob-nav-safety" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">안전성</button>
-            <button onclick="switchTab('accountability'); toggleMobileMenu()" id="mob-nav-accountability" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">책무성</button>
-            <button onclick="switchTab('share'); toggleMobileMenu()" id="mob-nav-share" class="nav-link bg-pastel-purple text-accent-secondary block px-3 py-2 rounded-md text-base font-bold w-full text-left mt-2">생각 공유</button>
+            <button onclick="window.switchTab('reliability'); window.toggleMobileMenu()" id="mob-nav-reliability" class="nav-link active block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">신뢰성</button>
+            <button onclick="window.switchTab('fairness'); window.toggleMobileMenu()" id="mob-nav-fairness" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">공정성</button>
+            <button onclick="window.switchTab('ethics'); window.toggleMobileMenu()" id="mob-nav-ethics" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">윤리성</button>
+            <button onclick="window.switchTab('transparency'); window.toggleMobileMenu()" id="mob-nav-transparency" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">투명성</button>
+            <button onclick="window.switchTab('safety'); window.toggleMobileMenu()" id="mob-nav-safety" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">안전성</button>
+            <button onclick="window.switchTab('accountability'); window.toggleMobileMenu()" id="mob-nav-accountability" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 w-full text-left">책무성</button>
+            <button onclick="window.switchTab('share'); window.toggleMobileMenu()" id="mob-nav-share" class="nav-link bg-pastel-purple text-accent-secondary block px-3 py-2 rounded-md text-base font-bold w-full text-left mt-2">생각 공유</button>
         </div>
     </header>
 
@@ -183,7 +183,7 @@
                     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 min-h-[200px] flex flex-col justify-between">
                         <div id="chat-history" class="space-y-4 mb-4">
                             <div class="text-right">
-                                <button id="btn-ask-ai" onclick="askAI()" class="bg-accent-primary text-white px-4 py-2 rounded-xl rounded-tr-none hover:bg-indigo-700 transition-colors shadow-sm inline-block">
+                                <button id="btn-ask-ai" onclick="window.askAI()" class="bg-accent-primary text-white px-4 py-2 rounded-xl rounded-tr-none hover:bg-indigo-700 transition-colors shadow-sm inline-block">
                                     "쇼팽 피아노 소나타 30번에 대해 알려줘"
                                 </button>
                             </div>
@@ -207,8 +207,8 @@
                                 <div id="ai-judgment" class="mt-4 text-center animate-[fadeIn_0.5s_ease-out]">
                                     <p class="text-sm font-semibold text-gray-800 mb-2">🤔 이 답변은 사실일까요?</p>
                                     <div class="flex justify-center gap-3">
-                                        <button onclick="judgeAnswer(true)" class="px-4 py-2 bg-green-100 text-green-700 border border-green-300 rounded-lg hover:bg-green-200 transition-colors font-medium">진짜 정보다</button>
-                                        <button onclick="judgeAnswer(false)" class="px-4 py-2 bg-red-100 text-red-700 border border-red-300 rounded-lg hover:bg-red-200 transition-colors font-medium">가짜 정보다</button>
+                                        <button onclick="window.judgeAnswer(true)" class="px-4 py-2 bg-green-100 text-green-700 border border-green-300 rounded-lg hover:bg-green-200 transition-colors font-medium">진짜 정보다</button>
+                                        <button onclick="window.judgeAnswer(false)" class="px-4 py-2 bg-red-100 text-red-700 border border-red-300 rounded-lg hover:bg-red-200 transition-colors font-medium">가짜 정보다</button>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                     <p class="text-sm text-gray-600 mb-4">과거 합격자 데이터(남성 80%, 여성 20%)를 학습한 AI가 두 지원자를 어떻게 평가하는지 확인해 보세요.</p>
                     
                     <div class="flex justify-center mb-4">
-                        <button id="btn-interview" onclick="runInterview()" class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
+                        <button id="btn-interview" onclick="window.runInterview()" class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
                             AI 서류 평가 시작하기
                         </button>
                     </div>
@@ -345,7 +345,7 @@
                     <p class="text-sm text-gray-600 mb-4">브레이크가 고장 난 자율주행 자동차입니다. 당신이 AI라면 어떤 선택을 하겠습니까? (클릭하여 선택)</p>
                     
                     <div class="flex flex-col md:flex-row gap-4 mb-4">
-                        <button onclick="chooseDilemma('A')" class="flex-1 border-2 border-transparent hover:border-accent-primary rounded-xl p-4 cursor-pointer transition-all bg-gray-50 text-center shadow-sm hover:shadow-md group">
+                        <button onclick="window.chooseDilemma('A')" class="flex-1 border-2 border-transparent hover:border-accent-primary rounded-xl p-4 cursor-pointer transition-all bg-gray-50 text-center shadow-sm hover:shadow-md group">
                             <div class="h-24 bg-gray-200 rounded-lg mb-3 flex items-center justify-center text-4xl group-hover:scale-105 transition-transform">
                                 🚗 💥 🚶‍♂️
                             </div>
@@ -353,7 +353,7 @@
                             <p class="text-xs text-gray-500">방향을 바꾸어 보행자 1명과 충돌<br>(탑승자 3명 생존)</p>
                         </button>
                         
-                        <button onclick="chooseDilemma('B')" class="flex-1 border-2 border-transparent hover:border-accent-primary rounded-xl p-4 cursor-pointer transition-all bg-gray-50 text-center shadow-sm hover:shadow-md group">
+                        <button onclick="window.chooseDilemma('B')" class="flex-1 border-2 border-transparent hover:border-accent-primary rounded-xl p-4 cursor-pointer transition-all bg-gray-50 text-center shadow-sm hover:shadow-md group">
                              <div class="h-24 bg-gray-200 rounded-lg mb-3 flex items-center justify-center text-4xl group-hover:scale-105 transition-transform">
                                 🚧 💥 🚗
                             </div>
@@ -398,7 +398,7 @@
                     <div class="flex items-center justify-center gap-3 mb-6">
                         <span id="label-blackbox" class="font-bold text-gray-800">기존 AI (블랙박스)</span>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="xai-toggle" class="sr-only peer" onchange="toggleXAI(this.checked)">
+                            <input type="checkbox" id="xai-toggle" class="sr-only peer" onchange="window.toggleXAI(this.checked)">
                             <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-500 shadow-inner"></div>
                         </label>
                         <span id="label-xai" class="text-gray-400">설명 가능한 AI (XAI)</span>
@@ -464,7 +464,7 @@
                                 <p id="ai-prediction" class="text-xl font-bold text-red-600">"정지 (STOP)"</p>
                             </div>
                         </div>
-                        <button id="btn-patch" onclick="applyPatch()" class="bg-orange-100 hover:bg-orange-200 text-orange-700 border border-orange-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <button id="btn-patch" onclick="window.applyPatch()" class="bg-orange-100 hover:bg-orange-200 text-orange-700 border border-orange-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                             🦋 나방 모양 해킹 패치 붙이기
                         </button>
                     </div>
@@ -474,12 +474,12 @@
                         <p class="text-xs text-gray-600 mb-3">다음 중 AI가 생성한 가짜 인물은 누구일까요?</p>
                         <div class="flex gap-4 justify-center mb-3">
                             <!-- Image 1 -->
-                            <div onclick="judgeDeepfake('A')" class="cursor-pointer hover:ring-4 ring-orange-200 rounded-lg p-2 bg-gray-50 border transition-all flex flex-col items-center">
+                            <div onclick="window.judgeDeepfake('A')" class="cursor-pointer hover:ring-4 ring-orange-200 rounded-lg p-2 bg-gray-50 border transition-all flex flex-col items-center">
                                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" alt="A 인물" class="w-16 h-16 rounded-md mb-2 object-cover shadow-sm">
                                 <span class="text-xs font-bold text-gray-700">A 인물</span>
                             </div>
                             <!-- Image 2 -->
-                            <div onclick="judgeDeepfake('B')" class="cursor-pointer hover:ring-4 ring-orange-200 rounded-lg p-2 bg-gray-50 border transition-all flex flex-col items-center">
+                            <div onclick="window.judgeDeepfake('B')" class="cursor-pointer hover:ring-4 ring-orange-200 rounded-lg p-2 bg-gray-50 border transition-all flex flex-col items-center">
                                 <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop" alt="B 인물" class="w-16 h-16 rounded-md mb-2 object-cover shadow-sm">
                                 <span class="text-xs font-bold text-gray-700">B 인물</span>
                             </div>
@@ -526,21 +526,21 @@
                                 <span class="text-blue-700">👩‍💻 개발자 책임</span>
                                 <span id="val-dev" class="text-gray-700">33</span>
                             </div>
-                            <input type="range" id="slide-dev" min="0" max="100" value="33" oninput="updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                            <input type="range" id="slide-dev" min="0" max="100" value="33" oninput="window.updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
                         </div>
                         <div>
                             <div class="flex justify-between text-sm font-medium mb-1">
                                 <span class="text-pink-700">👤 사용자 책임</span>
                                 <span id="val-user" class="text-gray-700">33</span>
                             </div>
-                            <input type="range" id="slide-user" min="0" max="100" value="33" oninput="updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-600">
+                            <input type="range" id="slide-user" min="0" max="100" value="33" oninput="window.updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-600">
                         </div>
                         <div>
                             <div class="flex justify-between text-sm font-medium mb-1">
                                 <span class="text-yellow-600">🏢 운영·관리자 책임</span>
                                 <span id="val-op" class="text-gray-700">34</span>
                             </div>
-                            <input type="range" id="slide-op" min="0" max="100" value="34" oninput="updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-500">
+                            <input type="range" id="slide-op" min="0" max="100" value="34" oninput="window.updateChart()" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-500">
                         </div>
                     </div>
 
@@ -561,16 +561,43 @@
         <section id="tab-share" class="tab-content">
             <div class="mb-8 text-center max-w-2xl mx-auto">
                 <h1 class="text-3xl font-bold text-accent-secondary mb-4">내 생각 공유하기</h1>
-                <p class="text-lg text-gray-600">인공지능과 인간이 공존하기 위해 가장 중요하다고 생각하는 윤리적 쟁점은 무엇인가요? 실시간으로 모두와 의견을 나눠보세요.</p>
+                <p class="text-lg text-gray-600">인공지능과 인간이 공존하기 위해 가장 중요하다고 생각하는 윤리적 쟁점은 무엇인가요? 실시간으로 우리 반 친구들과 의견을 나눠보세요.</p>
             </div>
             
-            <div class="max-w-4xl mx-auto space-y-8">
+            <!-- 1. 학급 선택 화면 -->
+            <div id="share-class-selection" class="block max-w-4xl mx-auto bg-white border border-purple-100 rounded-2xl p-8 shadow-sm text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">소속된 학급을 선택해주세요</h2>
+                <div id="class-buttons-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+                    <!-- Javascript로 1반~11반 생성될 위치 -->
+                    <script>
+                        (function() {
+                            const grid = document.getElementById('class-buttons-grid');
+                            if (!grid) return;
+                            let html = '';
+                            for(let i = 1; i <= 11; i++) {
+                                html += `<button onclick="window.selectClass(${i})" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-4 rounded-xl shadow-sm border border-indigo-200 transition-transform hover:scale-105">${i}반</button>`;
+                            }
+                            grid.innerHTML = html;
+                        })();
+                    </script>
+                </div>
+            </div>
+
+            <!-- 2. 선택된 학급 게시판 화면 (초기엔 숨김) -->
+            <div id="share-class-board" class="hidden max-w-4xl mx-auto space-y-8">
                 
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-purple-50 p-4 rounded-xl border border-purple-100">
+                    <h2 id="current-class-title" class="text-2xl font-bold text-accent-secondary">O반 생각 공유</h2>
+                    <button onclick="window.showClassSelection()" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm">
+                        다른 학급 선택하기
+                    </button>
+                </div>
+
                 <!-- Word Cloud Section -->
                 <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2 w-full">
                         <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <span class="text-2xl">☁️</span> AI 윤리 워드클라우드 (실시간)
+                            <span class="text-2xl">☁️</span> AI 윤리 워드클라우드
                         </h2>
                         <!-- 관리자용 워드클라우드 초기화 버튼 -->
                         <button onclick="window.requestResetWordCloud()" class="text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-lg font-bold border border-red-200 hover:bg-red-100 transition-colors shadow-sm whitespace-nowrap flex items-center gap-1">
@@ -635,7 +662,7 @@
             </div>
         </section>
 
-        <!-- Custom Admin Password Modal (No standard prompt() used) -->
+        <!-- Custom Admin Password Modal -->
         <div id="admin-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-6 w-11/12 max-w-sm shadow-xl transform transition-all border border-gray-200">
                 <div class="flex items-center gap-2 mb-2 text-red-600">
@@ -651,7 +678,7 @@
             </div>
         </div>
 
-        <!-- Custom Alert Modal (No standard alert() used) -->
+        <!-- Custom Alert Modal -->
         <div id="alert-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-6 w-11/12 max-w-sm shadow-xl transform transition-all text-center border border-gray-200">
                 <div id="alert-icon" class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
@@ -664,8 +691,48 @@
         </div>
 
         <script>
-            // --- 1. 신뢰성 (Reliability) 로직 ---
-            function askAI() {
+            // 전역 변수로 현재 선택된 반을 저장
+            window.currentClass = null;
+
+            window.showClassSelection = function() {
+                const sel = document.getElementById('share-class-selection');
+                const board = document.getElementById('share-class-board');
+                if(sel) {
+                    sel.classList.remove('hidden');
+                    sel.classList.add('block');
+                }
+                if(board) {
+                    board.classList.remove('block');
+                    board.classList.add('hidden');
+                }
+                window.currentClass = null;
+                if (typeof window.clearClassListeners === 'function') {
+                    window.clearClassListeners();
+                }
+            };
+
+            window.selectClass = function(classNum) {
+                window.currentClass = classNum;
+                const title = document.getElementById('current-class-title');
+                if(title) title.innerText = classNum + '반 생각 공유';
+                
+                const sel = document.getElementById('share-class-selection');
+                const board = document.getElementById('share-class-board');
+                if(sel) {
+                    sel.classList.remove('block');
+                    sel.classList.add('hidden');
+                }
+                if(board) {
+                    board.classList.remove('hidden');
+                    board.classList.add('block');
+                }
+                
+                if (typeof window.loadClassData === 'function') {
+                    window.loadClassData(classNum);
+                }
+            };
+
+            window.askAI = function() {
                 document.getElementById('btn-ask-ai').classList.add('opacity-50', 'cursor-not-allowed');
                 document.getElementById('ai-loading').classList.remove('hidden');
                 document.getElementById('ai-response').classList.add('hidden');
@@ -675,9 +742,9 @@
                     document.getElementById('ai-loading').classList.add('hidden');
                     document.getElementById('ai-response').classList.remove('hidden');
                 }, 1500);
-            }
+            };
 
-            function judgeAnswer(isReal) {
+            window.judgeAnswer = function(isReal) {
                 const resultDiv = document.getElementById('quiz-result');
                 resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
                 
@@ -688,10 +755,9 @@
                     resultDiv.classList.add('bg-red-100', 'text-red-800');
                     resultDiv.innerHTML = "❌ 틀렸습니다. 쇼팽은 평생 3개의 피아노 소나타만 작곡했습니다. AI의 <strong>거짓말(할루시네이션)</strong>에 속으셨네요!";
                 }
-            }
+            };
 
-            // --- 2. 공정성 (Fairness) 로직 ---
-            function runInterview() {
+            window.runInterview = function() {
                 const btn = document.getElementById('btn-interview');
                 btn.innerText = "평가 진행 중...";
                 btn.classList.add('opacity-50');
@@ -711,10 +777,9 @@
                     document.getElementById('interview-conclusion').classList.remove('hidden'); 
                     btn.innerText = "평가 완료";
                 }, 4000);
-            }
+            };
 
-            // --- 3. 윤리성 (Ethics) 로직 ---
-            function chooseDilemma(choice) {
+            window.chooseDilemma = function(choice) {
                 const resultBox = document.getElementById('dilemma-result');
                 resultBox.classList.remove('hidden', 'bg-blue-50', 'text-blue-800', 'bg-orange-50', 'text-orange-800');
                 
@@ -725,10 +790,9 @@
                     resultBox.classList.add('bg-orange-50', 'text-orange-800');
                     resultBox.innerHTML = "<strong>상황 B 선택:</strong> 탑승자의 안전과 기계의 원래 경로 유지를 우선시한 판단입니다. 하지만 결과적으로 인명 피해를 방치했다는 <strong>윤리적 비판</strong>을 피하기 어렵습니다. 정답은 없습니다.";
                 }
-            }
+            };
 
-            // --- 4. 투명성 (Transparency) 로직 ---
-            function toggleXAI(isChecked) {
+            window.toggleXAI = function(isChecked) {
                 const lblBlackbox = document.getElementById('label-blackbox');
                 const lblXai = document.getElementById('label-xai');
                 const viewBlackbox = document.getElementById('view-blackbox');
@@ -755,10 +819,9 @@
                     viewBlackbox.classList.remove('opacity-0', 'pointer-events-none');
                     viewBlackbox.classList.add('opacity-100');
                 }
-            }
+            };
 
-            // --- 5. 안전성 (Safety) 로직 ---
-            function applyPatch() {
+            window.applyPatch = function() {
                 const vision = document.getElementById('sign-vision');
                 const pred = document.getElementById('ai-prediction');
                 
@@ -769,16 +832,15 @@
                 
                 document.getElementById('btn-patch').innerText = "패치가 적용됨 (새로고침하여 복구)";
                 document.getElementById('btn-patch').classList.add('opacity-50', 'pointer-events-none');
-            }
+            };
 
-            function judgeDeepfake(choice) {
+            window.judgeDeepfake = function(choice) {
                 const res = document.getElementById('deepfake-result');
                 res.classList.remove('hidden');
                 res.innerHTML = "정답: 사실 두 이미지 모두 AI가 생성한 가짜 인물입니다(WhichFaceIsReal 사례 참조). 생성 기술이 발전함에 따라 <strong>비판적으로 판단하는 디지털 리터러시</strong>가 필수적입니다.";
-            }
+            };
 
-            // --- 6. 책무성 (Accountability) 로직 ---
-            function updateChart() {
+            window.updateChart = function() {
                 let vDev = parseInt(document.getElementById('slide-dev').value);
                 let vUser = parseInt(document.getElementById('slide-user').value);
                 let vOp = parseInt(document.getElementById('slide-op').value);
@@ -800,14 +862,14 @@
                 document.getElementById('bar-user').innerText = pUser + '%';
                 document.getElementById('bar-op').style.width = pOp + '%';
                 document.getElementById('bar-op').innerText = pOp + '%';
-            }
+            };
 
-            // --- UI/Navigation 로직 ---
             const tabs = ['reliability', 'fairness', 'ethics', 'transparency', 'safety', 'accountability', 'share'];
 
-            function switchTab(tabId) {
+            window.switchTab = function(tabId) {
                 tabs.forEach(t => {
-                    document.getElementById(`tab-${t}`).classList.remove('active');
+                    const tabEl = document.getElementById(`tab-${t}`);
+                    if (tabEl) tabEl.classList.remove('active');
                     
                     const navBtn = document.getElementById(`nav-${t}`);
                     if(navBtn) {
@@ -830,7 +892,8 @@
                     }
                 });
 
-                document.getElementById(`tab-${tabId}`).classList.add('active');
+                const targetTab = document.getElementById(`tab-${tabId}`);
+                if (targetTab) targetTab.classList.add('active');
 
                 const activeNavBtn = document.getElementById(`nav-${tabId}`);
                 if(activeNavBtn) {
@@ -854,24 +917,41 @@
                 
                 // 워드클라우드 렌더링 호출
                 if(tabId === 'share') {
-                    setTimeout(() => {
-                        if(typeof window.renderWordCloud === 'function') window.renderWordCloud();
-                    }, 50); 
+                    if(window.currentClass) {
+                        setTimeout(() => {
+                            if(typeof window.renderWordCloud === 'function') window.renderWordCloud();
+                        }, 50); 
+                    } else {
+                        if(typeof window.showClassSelection === 'function') window.showClassSelection();
+                    }
                 }
-            }
+            };
 
-            function toggleMobileMenu() {
+            window.toggleMobileMenu = function() {
                 const menu = document.getElementById('mobile-menu');
-                menu.classList.toggle('hidden');
-            }
+                if(menu) menu.classList.toggle('hidden');
+            };
 
             window.onload = () => {
-                switchTab('reliability');
+                if(typeof window.switchTab === 'function') window.switchTab('reliability');
             };
             
             window.addEventListener('resize', () => {
-                if(document.getElementById('tab-share').classList.contains('active')){
+                const shareTab = document.getElementById('tab-share');
+                if(shareTab && shareTab.classList.contains('active') && window.currentClass){
                     if(typeof window.renderWordCloud === 'function') window.renderWordCloud();
+                }
+            });
+            
+            // 전역 스코프 누락 방지를 위한 안전 장치
+            const globalFuncs = [
+                'showClassSelection', 'selectClass', 'askAI', 'judgeAnswer', 'runInterview',
+                'chooseDilemma', 'toggleXAI', 'applyPatch', 'judgeDeepfake', 'updateChart',
+                'switchTab', 'toggleMobileMenu'
+            ];
+            globalFuncs.forEach(fn => {
+                if (!window[fn] && typeof window[fn] === 'function') {
+                    window[fn] = window[fn];
                 }
             });
         </script>
@@ -882,14 +962,13 @@
             import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, getDoc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
             // --- 0. Admin & Utility Logic ---
-            
-            // Generate Admin Password: YYYYMMDD based on current local system date
+            // 당일 날짜(YYYYMMDD) 기반 비밀번호 생성기
             function getAdminPassword() {
                 const today = new Date();
                 const yyyy = today.getFullYear();
                 const mm = String(today.getMonth() + 1).padStart(2, '0');
                 const dd = String(today.getDate()).padStart(2, '0');
-                return yyyy + mm + dd;
+                return yyyy + mm + dd; // 8자리 문자열
             }
 
             let currentAdminAction = null;
@@ -962,16 +1041,17 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
             
-            // 앱 고유 식별자 설정
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'ai-ethics-shared-app';
             let currentUser = null;
 
-            // 글로벌 데이터 참조
             window.wordsData = [];
             window.postsData = [];
             window.postColors = ['bg-pastel-yellow', 'bg-pastel-blue', 'bg-pastel-pink', 'bg-pastel-green', 'bg-pastel-orange', 'bg-pastel-purple'];
 
-            // 2. 인증(Auth) 및 실시간 리스너 
+            let unsubscribeKeywords = null;
+            let unsubscribePosts = null;
+
+            // 2. 인증 및 반별 데이터 로더
             async function initApp() {
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -981,44 +1061,52 @@
                         const userCredential = await signInAnonymously(auth);
                         currentUser = userCredential.user;
                     }
-                    
-                    initRealtimeListeners();
                 } catch (error) {
                     console.error("Firebase Auth Error:", error);
                 }
             }
 
-            function initRealtimeListeners() {
+            window.clearClassListeners = function() {
+                if (unsubscribeKeywords) unsubscribeKeywords();
+                if (unsubscribePosts) unsubscribePosts();
+                window.wordsData = [];
+                window.postsData = [];
+            };
+
+            window.loadClassData = function(classNum) {
                 if (!currentUser) return;
+                window.clearClassListeners();
+
+                // Firestore Mandatory Rule 1 적용: /artifacts/{appId}/public/data/{collectionName}
+                const keywordsColName = `class_${classNum}_keywords`;
+                const postsColName = `class_${classNum}_posts`;
 
                 // [워드클라우드] 실시간 데이터 리스너
-                const keywordsRef = collection(db, 'artifacts', appId, 'public', 'data', 'keywords');
-                onSnapshot(keywordsRef, (snapshot) => {
+                const keywordsRef = collection(db, 'artifacts', appId, 'public', 'data', keywordsColName);
+                unsubscribeKeywords = onSnapshot(keywordsRef, (snapshot) => {
                     window.wordsData = [];
                     snapshot.forEach(doc => {
                         window.wordsData.push([doc.data().text, doc.data().count]);
                     });
                     
-                    if (document.getElementById('tab-share').classList.contains('active')) {
+                    if (document.getElementById('tab-share').classList.contains('active') && window.currentClass === classNum) {
                         window.renderWordCloud();
                     }
                 }, (error) => console.error("키워드 로드 에러:", error));
 
                 // [포스트잇] 실시간 데이터 리스너
-                const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
-                onSnapshot(postsRef, (snapshot) => {
+                const postsRef = collection(db, 'artifacts', appId, 'public', 'data', postsColName);
+                unsubscribePosts = onSnapshot(postsRef, (snapshot) => {
                     window.postsData = [];
                     snapshot.forEach(doc => {
                         window.postsData.push({ id: doc.id, ...doc.data() });
                     });
                     
-                    // 최신 글이 위로 오도록 내림차순 정렬
                     window.postsData.sort((a, b) => b.timestamp - a.timestamp); 
                     window.renderPosts();
                 }, (error) => console.error("포스트잇 로드 에러:", error));
-            }
+            };
 
-            // 3. UI 렌더링 (Firebase 데이터를 바탕으로 화면 갱신)
             const wcColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'];
             
             window.renderWordCloud = function() {
@@ -1111,17 +1199,23 @@
 
             // 4. 데이터 CRUD 액션 등록 및 관리자 기능
             
-            // [관리자] 워드클라우드 초기화 요청
+            // [관리자] 현재 학급 워드클라우드 초기화 요청
             window.requestResetWordCloud = function() {
+                if (!window.currentClass) {
+                    window.showAlertModal("학급을 먼저 선택해주세요.");
+                    return;
+                }
+                
                 window.openAdminModal(async () => {
                     try {
-                        const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'keywords'));
+                        const keywordsColName = `class_${window.currentClass}_keywords`;
+                        const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', keywordsColName));
                         const deletePromises = [];
                         snapshot.forEach((document) => {
-                            deletePromises.push(deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'keywords', document.id)));
+                            deletePromises.push(deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', keywordsColName, document.id)));
                         });
                         await Promise.all(deletePromises);
-                        window.showAlertModal("워드클라우드 데이터가 성공적으로 초기화되었습니다.");
+                        window.showAlertModal(`${window.currentClass}반의 워드클라우드 데이터가 성공적으로 초기화되었습니다.`);
                     } catch(e) {
                         console.error("초기화 에러:", e);
                         window.showAlertModal("초기화 중 오류가 발생했습니다.", "error");
@@ -1131,6 +1225,8 @@
 
             // [사용자/관리자] 포스트잇 삭제 분기 처리
             window.requestDeletePost = function(id, isOwner) {
+                if (!window.currentClass) return;
+
                 if (isOwner) {
                     // 본인이 작성한 글은 즉시 삭제
                     window.deletePost(id);
@@ -1145,6 +1241,11 @@
 
             window.addKeyword = async function() {
                 if (!currentUser) return;
+                if (!window.currentClass) {
+                    window.showAlertModal("학급을 먼저 선택해주세요.");
+                    return;
+                }
+
                 const input = document.getElementById('keyword-input');
                 const keyword = input.value.trim();
                 if(!keyword) return;
@@ -1152,7 +1253,8 @@
                 const docId = keyword.replace(/[^a-zA-Z0-9가-힣]/g, '_');
                 if(!docId) return;
 
-                const keywordRef = doc(db, 'artifacts', appId, 'public', 'data', 'keywords', docId);
+                const keywordsColName = `class_${window.currentClass}_keywords`;
+                const keywordRef = doc(db, 'artifacts', appId, 'public', 'data', keywordsColName, docId);
                 
                 try {
                     const docSnap = await getDoc(keywordRef);
@@ -1170,6 +1272,10 @@
             window.submitPost = async function(e) {
                 e.preventDefault();
                 if (!currentUser) return;
+                if (!window.currentClass) {
+                    window.showAlertModal("학급을 먼저 선택해주세요.");
+                    return;
+                }
                 
                 const name = document.getElementById('student-name').value;
                 const topic = document.getElementById('topic-select').value;
@@ -1189,8 +1295,10 @@
                     userId: currentUser.uid
                 };
 
+                const postsColName = `class_${window.currentClass}_posts`;
+
                 try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), newPost);
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', postsColName), newPost);
                     document.getElementById('comment-form').reset();
                 } catch (error) {
                     console.error("포스트잇 업로드 에러:", error);
@@ -1200,20 +1308,22 @@
             document.getElementById('comment-form').addEventListener('submit', window.submitPost);
 
             window.deletePost = async function(id) {
-                if (!currentUser) return;
+                if (!currentUser || !window.currentClass) return;
+                const postsColName = `class_${window.currentClass}_posts`;
                 try {
-                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'posts', id));
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', postsColName, id));
                 } catch (error) {
                     console.error("포스트잇 삭제 에러:", error);
                 }
             };
 
             window.likePost = async function(id) {
-                if (!currentUser) return;
+                if (!currentUser || !window.currentClass) return;
                 const post = window.postsData.find(p => p.id === id);
                 if (post) {
+                    const postsColName = `class_${window.currentClass}_posts`;
                     try {
-                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'posts', id), {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', postsColName, id), {
                             likes: post.likes + 1
                         });
                     } catch (error) {
