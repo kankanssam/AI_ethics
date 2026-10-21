@@ -151,6 +151,7 @@
     </header>
 
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <!-- (중략) 다른 섹션들은 기존 코드와 동일합니다 -->
         <section id="tab-reliability" class="tab-content active">
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">신뢰성 (Reliability)</h1>
@@ -227,6 +228,7 @@
             </div>
         </section>
 
+        <!-- (공정성, 윤리성, 투명성, 안전성, 책무성 섹션은 변경사항 없으므로 기존 코드를 그대로 유지했습니다.) -->
         <section id="tab-fairness" class="tab-content">
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">공정성 (Fairness)</h1>
@@ -590,7 +592,7 @@
                             <div id="bar-user" class="bg-pink-500 transition-all duration-300 flex items-center justify-center text-white text-xs font-bold" style="width: 33%">33%</div>
                             <div id="bar-op" class="bg-yellow-500 transition-all duration-300 flex items-center justify-center text-white text-xs font-bold" style="width: 34%">34%</div>
                         </div>
-                        <p class="text-xs text-gray-400 mt-3 text-center">* 정답은 없습니다. 모두가 각자의 위치에서 책무성을 다해야 합니다.</p>
+                        <p class="text-xs text-gray-400 mt-3 text-center">* 정답은 없습니다. 모두가 각자의 위치에서 책무성을 다해야 창의적이고 안전한 기술이 됩니다.</p>
                     </div>
                 </div>
             </div>
@@ -603,17 +605,16 @@
             </div>
         </section>
 
+        <!-- 생각 공유 섹션 및 스크립트 수정 부분 -->
         <section id="tab-share" class="tab-content">
             <div class="mb-8 text-center max-w-2xl mx-auto">
                 <h1 class="text-3xl font-bold text-accent-secondary mb-4">내 생각 공유하기</h1>
                 <p class="text-lg text-gray-600">인공지능과 인간이 공존하기 위해 가장 중요하다고 생각하는 윤리적 쟁점은 무엇인가요? 실시간으로 우리 반 친구들과 의견을 나눠보세요.</p>
             </div>
             
-            <!-- 1. 학급 선택 화면 -->
             <div id="share-class-selection" class="block max-w-4xl mx-auto bg-white border border-purple-100 rounded-2xl p-8 shadow-sm text-center">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">소속된 학급을 선택해주세요</h2>
                 <div id="class-buttons-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-                    <!-- Javascript로 1반~11반 생성될 위치 -->
                     <script>
                         (function() {
                             const grid = document.getElementById('class-buttons-grid');
@@ -628,7 +629,6 @@
                 </div>
             </div>
 
-            <!-- 2. 선택된 학급 게시판 화면 (초기엔 숨김) -->
             <div id="share-class-board" class="hidden max-w-4xl mx-auto space-y-8">
                 
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-purple-50 p-4 rounded-xl border border-purple-100">
@@ -638,13 +638,11 @@
                     </button>
                 </div>
 
-                <!-- Word Cloud Section -->
                 <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2 w-full">
                         <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
                             <span class="text-2xl">☁️</span> AI 윤리 워드클라우드
                         </h2>
-                        <!-- 관리자용 워드클라우드 초기화 버튼 -->
                         <button onclick="window.requestResetWordCloud()" class="text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-lg font-bold border border-red-200 hover:bg-red-100 transition-colors shadow-sm whitespace-nowrap flex items-center gap-1">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             워드클라우드 초기화
@@ -656,11 +654,9 @@
                         <button onclick="window.addKeyword()" class="bg-accent-secondary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-purple-700 transition-colors shadow-sm whitespace-nowrap">키워드 추가</button>
                     </div>
                     <div id="wordcloud-container" class="w-full h-[250px] bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center overflow-hidden">
-                        <!-- Canvas will be dynamically injected here to ensure clean reset -->
                     </div>
                 </div>
 
-                <!-- Post-it Input Form -->
                 <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
                     <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                         <span class="text-2xl">📝</span> 나의 의견 남기기
@@ -695,19 +691,17 @@
                     </form>
                 </div>
 
-                <!-- Post-it Grid Board -->
                 <div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                         <span class="text-2xl">📌</span> 공유 게시판 (실시간)
                     </h3>
                     <div id="comments-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                        <!-- Post-its will be dynamically rendered here via Firebase -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Custom Admin Password Modal -->
+        <!-- 모달들 -->
         <div id="admin-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-6 w-11/12 max-w-sm shadow-xl transform transition-all border border-gray-200">
                 <div class="flex items-center gap-2 mb-2 text-red-600">
@@ -723,7 +717,6 @@
             </div>
         </div>
 
-        <!-- Custom Alert Modal -->
         <div id="alert-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl p-6 w-11/12 max-w-sm shadow-xl transform transition-all text-center border border-gray-200">
                 <div id="alert-icon" class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
@@ -735,25 +728,17 @@
             </div>
         </div>
 
+        <!-- 기본 이벤트 스크립트 -->
         <script>
-            // --- 전역 변수 및 유틸리티 ---
             window.currentClass = null;
 
             window.showClassSelection = function() {
                 const sel = document.getElementById('share-class-selection');
                 const board = document.getElementById('share-class-board');
-                if(sel) {
-                    sel.classList.remove('hidden');
-                    sel.classList.add('block');
-                }
-                if(board) {
-                    board.classList.remove('block');
-                    board.classList.add('hidden');
-                }
+                if(sel) { sel.classList.remove('hidden'); sel.classList.add('block'); }
+                if(board) { board.classList.remove('block'); board.classList.add('hidden'); }
                 window.currentClass = null;
-                if (typeof window.clearClassListeners === 'function') {
-                    window.clearClassListeners();
-                }
+                if (typeof window.clearClassListeners === 'function') window.clearClassListeners();
             };
 
             window.selectClass = function(classNum) {
@@ -763,18 +748,10 @@
                 
                 const sel = document.getElementById('share-class-selection');
                 const board = document.getElementById('share-class-board');
-                if(sel) {
-                    sel.classList.remove('block');
-                    sel.classList.add('hidden');
-                }
-                if(board) {
-                    board.classList.remove('hidden');
-                    board.classList.add('block');
-                }
+                if(sel) { sel.classList.remove('block'); sel.classList.add('hidden'); }
+                if(board) { board.classList.remove('hidden'); board.classList.add('block'); }
                 
-                if (typeof window.loadClassData === 'function') {
-                    window.loadClassData(classNum);
-                }
+                if (typeof window.loadClassData === 'function') window.loadClassData(classNum);
             };
 
             window.askAI = function() {
@@ -782,7 +759,6 @@
                 document.getElementById('ai-loading').classList.remove('hidden');
                 document.getElementById('ai-response').classList.add('hidden');
                 document.getElementById('quiz-result').classList.add('hidden');
-                
                 setTimeout(() => {
                     document.getElementById('ai-loading').classList.add('hidden');
                     document.getElementById('ai-response').classList.remove('hidden');
@@ -792,7 +768,6 @@
             window.judgeAnswer = function(isReal) {
                 const resultDiv = document.getElementById('quiz-result');
                 resultDiv.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-                
                 if (!isReal) {
                     resultDiv.classList.add('bg-green-100', 'text-green-800');
                     resultDiv.innerHTML = "🎉 정답입니다! 쇼팽은 피아노 소나타를 3번까지만 작곡했습니다. AI가 그럴듯한 <strong>가짜 정보(할루시네이션)</strong>를 만들어냈습니다.";
@@ -827,7 +802,6 @@
             window.chooseDilemma = function(choice) {
                 const resultBox = document.getElementById('dilemma-result');
                 resultBox.classList.remove('hidden', 'bg-blue-50', 'text-blue-800', 'bg-orange-50', 'text-orange-800');
-                
                 if (choice === 'A') {
                     resultBox.classList.add('bg-blue-50', 'text-blue-800');
                     resultBox.innerHTML = "<strong>상황 A 선택:</strong> 다수를 구하기 위한 공리주의적 선택일 수 있으나, 무고한 보행자의 생명권 침해라는 <strong>윤리적 딜레마</strong>가 발생합니다. 정답은 없습니다.";
@@ -869,12 +843,9 @@
             window.applyPatch = function() {
                 const vision = document.getElementById('sign-vision');
                 const pred = document.getElementById('ai-prediction');
-                
                 vision.innerHTML = "🛑<span class='absolute -ml-6 mt-4 text-2xl'>🦋</span>";
                 vision.classList.add('scale-110');
-                
                 pred.innerHTML = "AI 모델 오작동: <span class='font-bold text-blue-600'>속도제한 80 (SPEED 80)</span>";
-                
                 document.getElementById('btn-patch').innerText = "패치가 적용됨 (새로고침하여 복구)";
                 document.getElementById('btn-patch').classList.add('opacity-50', 'pointer-events-none');
             };
@@ -918,9 +889,8 @@
                     
                     const navBtn = document.getElementById(`nav-${t}`);
                     if(navBtn) {
-                        if(t === 'share') {
-                            navBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-accent-secondary');
-                        } else {
+                        if(t === 'share') navBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                        else {
                             navBtn.classList.remove('active', 'bg-indigo-600', 'text-white', 'font-semibold', 'shadow-md');
                             navBtn.classList.add('text-gray-700', 'hover:bg-gray-200');
                         }
@@ -928,9 +898,8 @@
 
                     const mobNavBtn = document.getElementById(`mob-nav-${t}`);
                     if(mobNavBtn) {
-                         if(t === 'share') {
-                            mobNavBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-accent-secondary');
-                        } else {
+                         if(t === 'share') mobNavBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                         else {
                             mobNavBtn.classList.remove('active', 'bg-indigo-50', 'text-indigo-700', 'border-l-4', 'border-indigo-600');
                             mobNavBtn.classList.add('text-gray-700', 'hover:bg-gray-50');
                         }
@@ -942,9 +911,8 @@
 
                 const activeNavBtn = document.getElementById(`nav-${tabId}`);
                 if(activeNavBtn) {
-                    if(tabId === 'share') {
-                        activeNavBtn.classList.add('ring-2', 'ring-offset-2', 'ring-accent-secondary');
-                    } else {
+                    if(tabId === 'share') activeNavBtn.classList.add('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                    else {
                         activeNavBtn.classList.remove('text-gray-700', 'hover:bg-gray-200');
                         activeNavBtn.classList.add('active', 'bg-indigo-600', 'text-white', 'font-semibold', 'shadow-md');
                     }
@@ -952,20 +920,16 @@
 
                 const activeMobNavBtn = document.getElementById(`mob-nav-${tabId}`);
                  if(activeMobNavBtn) {
-                    if(tabId === 'share') {
-                        activeMobNavBtn.classList.add('ring-2', 'ring-offset-2', 'ring-accent-secondary');
-                    } else {
+                    if(tabId === 'share') activeMobNavBtn.classList.add('ring-2', 'ring-offset-2', 'ring-accent-secondary');
+                    else {
                         activeMobNavBtn.classList.remove('text-gray-700', 'hover:bg-gray-50');
                         activeMobNavBtn.classList.add('active', 'bg-indigo-50', 'text-indigo-700', 'border-l-4', 'border-indigo-600');
                     }
                 }
                 
-                // 워드클라우드 렌더링 호출
                 if(tabId === 'share') {
                     if(window.currentClass) {
-                        setTimeout(() => {
-                            if(typeof window.renderWordCloud === 'function') window.renderWordCloud();
-                        }, 50); 
+                        setTimeout(() => { if(typeof window.renderWordCloud === 'function') window.renderWordCloud(); }, 50); 
                     } else {
                         if(typeof window.showClassSelection === 'function') window.showClassSelection();
                     }
@@ -977,9 +941,7 @@
                 if(menu) menu.classList.toggle('hidden');
             };
 
-            window.onload = () => {
-                if(typeof window.switchTab === 'function') window.switchTab('reliability');
-            };
+            window.onload = () => { if(typeof window.switchTab === 'function') window.switchTab('reliability'); };
             
             window.addEventListener('resize', () => {
                 const shareTab = document.getElementById('tab-share');
@@ -988,16 +950,13 @@
                 }
             });
             
-            // 전역 스코프 누락 방지를 위한 안전 장치
             const globalFuncs = [
                 'showClassSelection', 'selectClass', 'askAI', 'judgeAnswer', 'runInterview',
                 'chooseDilemma', 'toggleXAI', 'applyPatch', 'judgeDeepfake', 'updateChart',
                 'switchTab', 'toggleMobileMenu'
             ];
             globalFuncs.forEach(fn => {
-                if (!window[fn] && typeof window[fn] === 'function') {
-                    window[fn] = window[fn];
-                }
+                if (!window[fn] && typeof window[fn] === 'function') window[fn] = window[fn];
             });
         </script>
 
@@ -1006,14 +965,12 @@
             import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
             import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, getDoc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-            // --- 0. Admin & Utility Logic ---
-            // 당일 날짜(YYYYMMDD) 기반 비밀번호 생성기
             function getAdminPassword() {
                 const today = new Date();
                 const yyyy = today.getFullYear();
                 const mm = String(today.getMonth() + 1).padStart(2, '0');
                 const dd = String(today.getDate()).padStart(2, '0');
-                return yyyy + mm + dd; // 8자리 문자열
+                return yyyy + mm + dd;
             }
 
             let currentAdminAction = null;
@@ -1043,9 +1000,7 @@
             });
 
             document.getElementById('admin-password-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    document.getElementById('admin-modal-confirm').click();
-                }
+                if (e.key === 'Enter') document.getElementById('admin-modal-confirm').click();
             });
 
             window.showAlertModal = function(message, type="info") {
@@ -1067,7 +1022,6 @@
                 document.getElementById('alert-modal').classList.remove('flex');
             };
 
-            // 1. Firebase Config Setup
             let firebaseConfig;
             if (typeof __firebase_config !== 'undefined') {
                 firebaseConfig = JSON.parse(__firebase_config);
@@ -1096,7 +1050,6 @@
             let unsubscribeKeywords = null;
             let unsubscribePosts = null;
 
-            // 2. 인증 및 반별 데이터 로더
             async function initApp() {
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -1122,11 +1075,9 @@
                 if (!currentUser) return;
                 window.clearClassListeners();
 
-                // Firestore Mandatory Rule 1 적용: /artifacts/{appId}/public/data/{collectionName}
                 const keywordsColName = `class_${classNum}_keywords`;
                 const postsColName = `class_${classNum}_posts`;
 
-                // [워드클라우드] 실시간 데이터 리스너
                 const keywordsRef = collection(db, 'artifacts', appId, 'public', 'data', keywordsColName);
                 unsubscribeKeywords = onSnapshot(keywordsRef, (snapshot) => {
                     window.wordsData = [];
@@ -1139,7 +1090,6 @@
                     }
                 }, (error) => console.error("키워드 로드 에러:", error));
 
-                // [포스트잇] 실시간 데이터 리스너
                 const postsRef = collection(db, 'artifacts', appId, 'public', 'data', postsColName);
                 unsubscribePosts = onSnapshot(postsRef, (snapshot) => {
                     window.postsData = [];
@@ -1154,15 +1104,13 @@
 
             const wcColors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'];
             
-            // 워드클라우드 렌더링 (Canvas 리셋 방식으로 완벽한 초기화 보장)
+            // 🔥 수정된 워드클라우드 렌더링 함수
             window.renderWordCloud = function() {
                 const container = document.getElementById('wordcloud-container');
                 if(!container) return;
 
-                // 1. 기존 캔버스 완전 제거
                 container.innerHTML = '';
                 
-                // 2. 새로운 캔버스 생성 및 속성 설정
                 const canvas = document.createElement('canvas');
                 canvas.id = 'word-canvas';
                 canvas.width = container.clientWidth;
@@ -1171,26 +1119,37 @@
 
                 const ctx = canvas.getContext('2d');
 
-                // 3. 데이터가 없을 경우 안내 문구 표시
                 if (window.wordsData.length === 0) {
                     ctx.font = '15px Inter';
-                    ctx.fillStyle = '#9ca3af'; // text-gray-400
+                    ctx.fillStyle = '#9ca3af';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText('아직 등록된 키워드가 없습니다. 첫 번째 키워드를 추가해보세요!', canvas.width / 2, canvas.height / 2);
                     return;
                 }
                 
-                // 4. 데이터가 있으면 워드클라우드 라이브러리 실행
+                // 데이터 중 가장 높은 빈도수 찾기
+                let maxCount = Math.max(...window.wordsData.map(w => w[1]));
+                if (maxCount < 1) maxCount = 1;
+                
+                // 컨테이너 크기에 맞춰 가장 큰 단어의 최대 폰트 사이즈 설정 (예: 60px)
+                let maxFontSize = 60;
+
                 if(typeof WordCloud !== 'undefined') {
                     WordCloud(canvas, {
                         list: window.wordsData,
                         fontFamily: 'Inter, Pretendard, sans-serif',
-                        weightFactor: function (size) { return size * 3; },
+                        // 가장 많이 입력된 단어가 maxFontSize를 갖고 나머지는 비율에 맞게 작아지도록 weightFactor 설정
+                        weightFactor: function (size) { 
+                            let calcSize = (size / maxCount) * maxFontSize;
+                            return Math.max(15, calcSize); // 최소 15px로 제한하여 너무 작아지는 것 방지
+                        },
                         color: function() { return wcColors[Math.floor(Math.random() * wcColors.length)]; },
                         rotateRatio: 0, 
                         backgroundColor: 'transparent',
-                        gridSize: 8
+                        gridSize: 8,
+                        shrinkToFit: true, // 프레임을 벗어나지 않도록 크기 자동 조절 옵션 추가
+                        drawOutOfBound: false
                     });
                 }
             };
@@ -1214,7 +1173,6 @@
                     const rotateDeg = ((post.timestamp % 6) - 3).toFixed(1);
                     const isOwner = currentUser && post.userId === currentUser.uid;
                     
-                    // 삭제 버튼 (본인 및 관리자 공용)
                     const deleteBtnHtml = `
                         <button onclick="window.requestDeletePost('${post.id}', ${isOwner})" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors bg-white/40 hover:bg-white/80 rounded-full p-1 z-10" title="삭제 (본인 또는 관리자)">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -1249,10 +1207,7 @@
                     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
                 }[tag]));
             }
-
-            // 4. 데이터 CRUD 액션 등록 및 관리자 기능
             
-            // [관리자] 현재 학급 워드클라우드 초기화 요청
             window.requestResetWordCloud = function() {
                 if (!window.currentClass) {
                     window.showAlertModal("학급을 먼저 선택해주세요.");
@@ -1269,10 +1224,8 @@
                         });
                         await Promise.all(deletePromises);
                         
-                        // 데이터 삭제 후 UI 빈 배열로 강제 업데이트
                         window.wordsData = [];
                         window.renderWordCloud();
-                        
                         window.showAlertModal(`${window.currentClass}반의 워드클라우드 데이터가 성공적으로 초기화되었습니다.`);
                     } catch(e) {
                         console.error("초기화 에러:", e);
@@ -1281,15 +1234,12 @@
                 });
             };
 
-            // [사용자/관리자] 포스트잇 삭제 분기 처리
             window.requestDeletePost = function(id, isOwner) {
                 if (!window.currentClass) return;
 
                 if (isOwner) {
-                    // 본인이 작성한 글은 즉시 삭제
                     window.deletePost(id);
                 } else {
-                    // 타인의 글은 관리자 비밀번호 요구
                     window.openAdminModal(() => {
                         window.deletePost(id);
                         window.showAlertModal("관리자 권한으로 포스트잇이 삭제되었습니다.");
@@ -1390,7 +1340,6 @@
                 }
             };
 
-            // 애플리케이션 기동
             initApp();
         </script>
     </main>
