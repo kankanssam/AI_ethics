@@ -641,7 +641,7 @@
                 <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2 w-full">
                         <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <span class="text-2xl">☁️</span> AI 윤리 워드클라우드
+                            <span class="text-2xl">☁️</span> AI 윤리 워드클라우드(6가지 쟁점 중 가장 중요하다고 생각하는 쟁점을 추가해주세요.)
                         </h2>
                         <button onclick="window.requestResetWordCloud()" class="text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-lg font-bold border border-red-200 hover:bg-red-100 transition-colors shadow-sm whitespace-nowrap flex items-center gap-1">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -650,7 +650,7 @@
                     </div>
                     
                     <div class="flex gap-2 mb-4">
-                        <input type="text" id="keyword-input" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent-secondary focus:border-accent-secondary" placeholder="AI 윤리를 한 단어로 표현한다면? (예: 책임감, 공정성)" onkeypress="if(event.key === 'Enter') window.addKeyword()">
+                        <input type="text" id="keyword-input" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent-secondary focus:border-accent-secondary" placeholder="AI 윤리에서 가장 중요하다고 생각하는 쟁점은? (예: 책임감, 공정성)" onkeypress="if(event.key === 'Enter') window.addKeyword()">
                         <button onclick="window.addKeyword()" class="bg-accent-secondary text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-purple-700 transition-colors shadow-sm whitespace-nowrap">키워드 추가</button>
                     </div>
                     <div id="wordcloud-container" class="w-full h-[250px] bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center overflow-hidden">
@@ -659,7 +659,7 @@
 
                 <div class="bg-white border border-purple-100 rounded-2xl p-6 shadow-sm">
                     <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <span class="text-2xl">📝</span> 나의 의견 남기기
+                        <span class="text-2xl">📝</span> 나의 의견 남기기(가장 우선시 되어야 한다고 생각하는 쟁점을 선택하고 이유를 작성하시오.)
                     </h2>
                     <form id="comment-form" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
